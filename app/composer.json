@@ -1,0 +1,6 @@
+{
+    "require": {
+        "sunra/php-simple-html-dom-parser": "1.5.0",
+        "predis/predis": "~1.0"
+    }
+}

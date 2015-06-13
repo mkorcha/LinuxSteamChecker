@@ -1,0 +1,7 @@
+# Composer autoload files
+app/vendor/
+
+# Config files with Steam API key and the key in Redis to use
+app/config.php
+
+dump.rdb
