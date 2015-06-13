@@ -1,3 +1,6 @@
+# Because OS X is a fail
+.DS_Store
+
 # Composer autoload files
 app/vendor/
 
