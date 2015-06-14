@@ -12,3 +12,7 @@ dump.rdb
 
 # Node installed things
 node_modules/
+
+# Completed front-end files
+public/js/
+public/css/
