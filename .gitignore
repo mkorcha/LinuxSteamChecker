@@ -7,4 +7,8 @@ app/vendor/
 # Config files with Steam API key and the key in Redis to use
 app/config.php
 
+# Redis
 dump.rdb
+
+# Node installed things
+node_modules/

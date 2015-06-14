@@ -1,6 +1,6 @@
 <?php
 
-require "vendor/autoload.php";
+require "../app/vendor/autoload.php";
 
 use Sunra\PhpSimple\HtmlDomParser;
 
