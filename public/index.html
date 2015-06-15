@@ -13,20 +13,25 @@
 	</head>
 
 	<body>
-		<h1>Linux Steam Checker</h1>
+		<div class="container">
+			<h1>Linux Steam Checker</h1>
 
-		<img src="img/tux.png" alt="Tux" />
+			<img src="img/tux.png" alt="Tux" />
 
-		<h2>Want to see what you have that will run natively? Enter your Steam profile URL below and find out!</h2>
+			<h2>What in your library will run natively on Linux? Enter your Steam profile URL below and find out!</h2>
 
-		<input type="text" id="profile" placeholder="http://steamcommunity.com/id/mikethepwnstar" />
-		<input type="submit" id="submit" value="Check!" />
+			<form method="get">
+				<input type="text" id="profile" placeholder="http://steamcommunity.com/id/mikethepwnstar" /><input type="submit" id="submit" value="Check!" />
+			</form>
 
-		<p>This page was created for people considering switching to Linux full-time and want to see what they can take with them. Don't see all of your favourites? Never fear, you still have options! <a href="https://www.winehq.org/">Wine</a> allows you to run many games using a compatibility layer, and often you can find support for your favourite games to get it set up. You can also <a href="https://bbs.archlinux.org/viewtopic.php?id=162768">create a gaming VM</a> and run a Windows VM only for games at near-native performance, if your hardware supports it. Finally, <a href="https://help.ubuntu.com/community/WindowsDualBoot">dual booting</a> is also an option, though it can be inconvenient.</p>
+			<div id="result"></div>
 
-		<footer>
-			Copyright &copy; 2015 <a href="https://mikekorcha.com/">Mike Korcha</a>. I'm not affiliated with Valve in any way, <a href="https://developer.valvesoftware.com/wiki/Steam_Web_API">I just use their API</a>. <a href="https://github.com/mkorcha/LinuxSteamChecker">This project is on GitHub!</a>
-		</footer>
+			<p>This page was created for those considering making the switch to Linux full time, who want to know what games in their library will go with them. Don't see your favourites listed? Don't worry, you still have options! <a href="https://www.winehq.org/">Wine</a> allows you to run many games using a Windows compatibility layer, and has a strong community willing to help. You can also <a href="https://bbs.archlinux.org/viewtopic.php?id=162768">create a gaming VM</a> and run a Windows VM at near-native performance, if your hardware supports it. Finally, you could always <a href="https://help.ubuntu.com/community/WindowsDualBoot">dual boot</a>, however it can be inconvenient.</p>
+
+			<footer>
+				Copyright &copy; 2015 <a href="https://mikekorcha.com/">Mike Korcha</a>. I'm not affiliated with Valve in any way, <a href="https://developer.valvesoftware.com/wiki/Steam_Web_API">I just use their API</a>. <a href="https://github.com/mkorcha/LinuxSteamChecker">This project is on GitHub,</a> check it out!
+			</footer>
+		</div>
 
 		<script src="js/main.js"></script>
 	</body>
