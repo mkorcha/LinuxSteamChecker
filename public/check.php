@@ -16,12 +16,17 @@ if(!$redis->smembers($key) || !$redis->get($key . "_count")) {
 	
 	$user = json_decode(geturl($url))->steamID64;
 
-	$games = json_decode(geturl("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=". STEAM_API_KEY ."&steamid=". $user ."&format=json"));
+	$games = json_decode(geturl("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=". STEAM_API_KEY ."&steamid=". $user ."&format=json&include_appinfo=1&include_played_free_games=1"));
 
 	$owned = array();
 
-	foreach($games->response->games as $game)
-		$owned[] = $game->appid;
+	foreach($games->response->games as $game) {
+		$appid = $game->appid;
+		$owned[] = $appid;
+
+		$redis->rpush(REDIS_KEY ."_game_". $appid, $game->name);
+		$redis->rpush(REDIS_KEY ."_game_". $appid, $game->img_logo_url);
+	}
 
 	$redis->set($key . "_count", $games->response->game_count);
 	$redis->expire($key . "_count", 60 * 60 * 12);
@@ -33,9 +38,21 @@ if(!$redis->smembers($key) || !$redis->get($key . "_count")) {
 $games = $redis->sinter(REDIS_KEY, $key);
 $count = $redis->get($key . "_count");
 
+$info = array();
+
+foreach($games as $game) {
+	$lookup = $redis->lrange(REDIS_KEY . "_game_" . $game, 0, -1);
+
+	$info[] = array(
+		"name" => $lookup[0],
+		"hash" => $lookup[1]
+	);
+}
+
 echo json_encode(array(
 	"count"      => count($games),
-	"percentage" => round((count($games) / $count) * 100)
+	"percentage" => round((count($games) / $count) * 100),
+	"games"      => $info
 ));
 
 function geturl($url) {
