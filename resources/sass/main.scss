@@ -22,7 +22,7 @@ body {
 }
 
 .container {
-	width: 720px;
+	width: 740px;
 
 	margin: 0 auto;
 }
@@ -85,4 +85,43 @@ input {
 
 #result {
 	display: none;
+}
+
+table {
+	max-width: 736px;
+
+	margin: 1em auto 0 auto;
+}
+
+td {
+	width: 184px;
+	height: 69px;
+}
+
+.tile {
+	display: table;
+
+	height: 100%;
+	width: 184px;
+	max-width: 184px;
+}
+
+.overlay {
+	font-size: .85em;
+
+	padding: 0 1em;
+
+	background: rgba(0, 0, 0, .75);
+
+	color: white;
+
+	display: table-cell;
+
+	max-width: 184px;
+
+	vertical-align: middle;
+
+	word-wrap: break-word;
+
+	line-height: 1.2em;
 }

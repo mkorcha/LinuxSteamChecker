@@ -44,6 +44,7 @@ foreach($games as $game) {
 	$lookup = $redis->lrange(REDIS_KEY . "_game_" . $game, 0, -1);
 
 	$info[] = array(
+		"id"   => $game,
 		"name" => $lookup[0],
 		"hash" => $lookup[1]
 	);
