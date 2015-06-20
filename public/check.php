@@ -12,8 +12,8 @@ $key = REDIS_KEY .'_'. urlencode($url);
 if(!$redis->smembers($key) || !$redis->get($key . "_count")) {
 	$url = rtrim($url, '/');
 	$url = substr($url, strrpos($url, '/') + 1);
-	$url = "http://steamid.co/ajax/steamid.php?ddd=" . $url;
-	
+	$url = "http://steamid.co/ajax/steamid64.php?ddd=" . $url;
+
 	$user = json_decode(geturl($url))->steamID64;
 
 	$games = json_decode(geturl("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=". STEAM_API_KEY ."&steamid=". $user ."&format=json&include_appinfo=1&include_played_free_games=1"));

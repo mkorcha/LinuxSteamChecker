@@ -107,21 +107,19 @@ td {
 }
 
 .overlay {
-	font-size: .85em;
+	display: table-cell;
 
 	padding: 0 1em;
 
+	font-size: .85em;
+	line-height: 1.2em;
+
 	background: rgba(0, 0, 0, .75);
-
 	color: white;
-
-	display: table-cell;
 
 	max-width: 184px;
 
 	vertical-align: middle;
 
 	word-wrap: break-word;
-
-	line-height: 1.2em;
 }
