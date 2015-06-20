@@ -7,53 +7,43 @@ function create_tile(id, name, hash) {
 	return tile_template.replace("\{appid\}", id).replace("\{hash\}", hash).replace("\{name\}", name);
 }
 
+function create_description(count, percentage) {
+	var template = "\
+		You have <strong>{count}</strong> games which run natively on Linux, which accounts for<br /> approximately <strong>{percentage}</strong>% of your library.";
+
+	return template.replace("\{count\}", count).replace("\{percentage\}", percentage);
+}
+
 document.getElementById("form").onsubmit = function(e) {
 	e.preventDefault();
 
 	var http = new XMLHttpRequest();
-	http.open("GET", "check.php");
+	http.open("GET", "check.php?url="+ document.getElementById("profile").value);
 
 	http.onreadystatechange = function() {
 		if(http.readyState == 4 && http.status == 200) {
-			var json = JSON.parse(http.responseText);
-
-			document.getElementById("count").innerHTML = json.count;
-			document.getElementById("percentage").innerHTML = json.percentage;
-
+			var json   = JSON.parse(http.responseText);
 			var result = document.getElementById("result");
-			var table  = result.getElementsByTagName("table")[0];
-
-			if(typeof table === "Node") {
-				result.removeChild(table);
-			}
+			
+			result.innerHTML = create_description(json.count, json.percentage);
 
 			table = document.createElement("table");
 
 			result.appendChild(table);
 
-			for(var i = 0; i < json.count; i+=4) {
-				console.log(i);
-
+			for(var i = 0; i < json.count; i += 4) {
 				var row = table.insertRow();
 
 				row.insertCell(0).innerHTML = create_tile(json.games[i].id, json.games[i].name, json.games[i].hash);
 
-				if(json.count > i + 1) {
-					row.insertCell(1).innerHTML = create_tile(json.games[i + 1].id, json.games[i + 1].name, json.games[i + 1].hash);
-				}
-
-				if(json.count > i + 2) {
-					row.insertCell(2).innerHTML = create_tile(json.games[i + 2].id, json.games[i + 2].name, json.games[i + 2].hash);
-				}
-
-				if(json.count > i + 3) {
-					row.insertCell(3).innerHTML = create_tile(json.games[i + 3].id, json.games[i + 3].name, json.games[i + 3].hash);
+				for(var j = 1; j < 4; j++) {
+					if(json.count > i + j) {
+						row.insertCell(j).innerHTML = create_tile(json.games[i + j].id, json.games[i + j].name, json.games[i + j].hash)
+					}
 				}
 			}
 
 			document.getElementById("result").style.display = "block";
-
-			console.log(document.getElementsByTagName("table")[0].getElementsByTagName("tbody")[0].children.length);
 		}
 	}
 

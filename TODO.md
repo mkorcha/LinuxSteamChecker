@@ -1,6 +1,7 @@
 TODO
 ====
 
-* Show the games which ARE Linux enabled
-* Fancy simple layout 
-* Switch to GET request for url in the page instead of my hard-coded Steam community URL
+* Fix for long one-word game names in CSS
+* Add some kind of loading indicator
+* Fancy hash checking for a url to share
+* Make it work for non-JS clients

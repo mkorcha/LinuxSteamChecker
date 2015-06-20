@@ -5,7 +5,7 @@ require "../app/config.php";
 
 $redis = new Predis\Client();
 
-$url = "http://steamcommunity.com/id/mikethepwnstar";
+$url = trim($_GET['url']);
 
 $key = REDIS_KEY .'_'. urlencode($url);
 
