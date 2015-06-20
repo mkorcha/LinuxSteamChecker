@@ -1,1 +1,0 @@
-This folder just shows the conceptual script I used to see if this was actually a viable thing. I wouldn't suggest using it. I've also removed my API key from it, so if you **do** decide to play with it, you'll need to add something like `define("API_KEY", "...");` to the script.
