@@ -9,13 +9,17 @@ function create_tile(id, name, hash) {
 
 function create_description(count, percentage) {
 	var template = "\
-		You have <strong>{count}</strong> games which run natively on Linux, which accounts for<br /> approximately <strong>{percentage}</strong>% of your library.";
+		You have <strong>{count}</strong> games which run natively on Linux, which accounts for<br /> approximately <strong>{percentage}</strong>% of your library.<br /><small>Hint: Use Ctrl+F to find a specific game!</small>";
 
 	return template.replace("\{count\}", count).replace("\{percentage\}", percentage);
 }
 
 document.getElementById("form").onsubmit = function(e) {
 	e.preventDefault();
+
+	document.getElementById("result").innerHTML = "<img src=\"img/loader.gif\" />";
+
+	document.getElementById("result").style.display = "block";
 
 	var http = new XMLHttpRequest();
 	http.open("GET", "check.php?url="+ document.getElementById("profile").value);
@@ -42,8 +46,6 @@ document.getElementById("form").onsubmit = function(e) {
 					}
 				}
 			}
-
-			document.getElementById("result").style.display = "block";
 		}
 	}
 

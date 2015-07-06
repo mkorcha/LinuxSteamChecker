@@ -12,11 +12,17 @@ $key = REDIS_KEY .'_'. urlencode($url);
 if(!$redis->smembers($key) || !$redis->get($key . "_count")) {
 	$url = rtrim($url, '/');
 	$url = substr($url, strrpos($url, '/') + 1);
-	$url = "http://steamid.co/ajax/steamid64.php?ddd=" . $url;
+
+	if(is_numeric($url)) {
+		$url = "http://steamid.co/ajax/steamid64.php?ddd=" . $url;
+	}
+	else {
+		$url = "http://steamid.co/ajax/steamid.php?ddd=" . $url;
+	}
 
 	$user = json_decode(geturl($url))->steamID64;
 
-	$games = json_decode(geturl("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=". STEAM_API_KEY ."&steamid=". $user ."&format=json&include_appinfo=1&include_played_free_games=1"));
+	$games = json_decode(geturl("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" . STEAM_API_KEY . "&steamid=" . $user . "&format=json&include_appinfo=1&include_played_free_games=1"));
 
 	$owned = array();
 
@@ -24,8 +30,8 @@ if(!$redis->smembers($key) || !$redis->get($key . "_count")) {
 		$appid = $game->appid;
 		$owned[] = $appid;
 
-		$redis->rpush(REDIS_KEY ."_game_". $appid, $game->name);
-		$redis->rpush(REDIS_KEY ."_game_". $appid, $game->img_logo_url);
+		$redis->rpush(REDIS_KEY . "_game_" . $appid, $game->name);
+		$redis->rpush(REDIS_KEY . "_game_" . $appid, $game->img_logo_url);
 	}
 
 	$redis->set($key . "_count", $games->response->game_count);
@@ -36,7 +42,7 @@ if(!$redis->smembers($key) || !$redis->get($key . "_count")) {
 }
 
 $games = $redis->sinter(REDIS_KEY, $key);
-$count = $redis->get($key . "_count");
+$count = $redis->get($key ."_count");
 
 $info = array();
 
@@ -45,7 +51,8 @@ foreach($games as $game) {
 
 	$info[] = array(
 		"id"   => $game,
-		"name" => $lookup[0],
+		// arbitrary numbers to break long strings...yay?
+		"name" => strpos($lookup[0], ' ') > 16 ? (substr($lookup[0], 0, 16) . ' ' . substr($lookup[0], 17)) : $lookup[0],
 		"hash" => $lookup[1]
 	);
 }
